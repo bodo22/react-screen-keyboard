@@ -67,7 +67,8 @@ export default class Keyboard extends PureComponent {
 		const {value, selectionStart, selectionEnd} = inputNode;
 		const nextValue = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
 
-		inputNode.value = nextValue;
+		// inputNode.value = nextValue;
+		this.changeInputValue(nextValue, inputNode);
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
@@ -93,7 +94,8 @@ export default class Keyboard extends PureComponent {
 		}
 		nextSelectionPosition = (nextSelectionPosition > 0) ? nextSelectionPosition : 0;
 
-		inputNode.value = nextValue;
+		// inputNode.value = nextValue;
+		this.changeInputValue(nextValue, inputNode);
 		if (this.props.onClick) {
 			this.props.onClick(nextValue);
 		}
@@ -245,6 +247,20 @@ export default class Keyboard extends PureComponent {
 			</div>
 		);
 	}
+
+	changeInputValue = (newVal, inputNode) => {
+    const valueSetter = Object.getOwnPropertyDescriptor(inputNode, 'value').set;
+    const prototype = Object.getPrototypeOf(inputNode);
+    const prototypeValueSetter = Object.getOwnPropertyDescriptor(prototype, 'value').set;
+    
+    if (valueSetter && valueSetter !== prototypeValueSetter) {
+      prototypeValueSetter.call(inputNode, newVal);
+    } else {
+      valueSetter.call(inputNode, newVal);
+    }
+    var event = new Event('input', { bubbles: true });
+    inputNode.dispatchEvent(event);
+  }
 
 	render() {
 		if (!this.props.inputNode) {
