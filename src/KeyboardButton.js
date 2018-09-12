@@ -5,7 +5,6 @@ export default class KeyboardButton extends PureComponent {
 	static propTypes = {
 		value: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.node.isRequired]),
 		classes: PropTypes.string,
-		onClick: PropTypes.func.isRequired,
 		autofocus: PropTypes.bool,
 		isDisabled: PropTypes.bool,
 	};
@@ -23,7 +22,7 @@ export default class KeyboardButton extends PureComponent {
 			<button
 				type="button"
 				className={`keyboard-button ${this.props.classes}`}
-				onClick={this.props.isDisabled ? null : this.handleClick}
+				onPointerDown={this.props.isDisabled ? null : this.handleClick}
 				autoFocus={this.props.autofocus}
 				disabled={this.props.isDisabled}
 			>
