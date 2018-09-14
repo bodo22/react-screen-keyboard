@@ -44,6 +44,10 @@
 	background-color: #ccc;
 }
 
+.keyboard-button-pressed {
+	background-color: #ccc;
+}
+
 .keyboard-numberButton {
 	flex-grow: 1;
 }
