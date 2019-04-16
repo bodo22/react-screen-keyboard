@@ -20,7 +20,8 @@ export default class KeyboardButton extends PureComponent {
 		isDisabled: false,
 	};
 
-	handleClick = () => {
+	handleClick = e => {
+		e.preventDefault();
 		this.setState({ isPressed: true });
 		this.props.onClick(this.props.value);
 	}
